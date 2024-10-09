@@ -1,0 +1,101 @@
+<div *ngIf="loading">
+
+    <app-loading></app-loading>
+  </div>
+  
+
+<div *ngIf="!loading" class="container mx-auto py-6"> 
+    <h1 class="text-3xl font-bold mb-6">Devil Fruits</h1>
+
+    <!-- Filters -->
+    <div class="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Filter by name -->
+        <div>
+            <label for="filterFruitName" class="block font-bold">Fruit Name:</label>
+            <input 
+                type="text" 
+                id="filterFruitName" 
+                class="form-control w-full px-3 py-2 rounded" 
+                placeholder="Search by name..." 
+                [(ngModel)]="filterFruitName" 
+                (ngModelChange)="onFilterChange()"
+            />
+        </div>
+
+        <!-- Filter by fruit type -->
+        <div>
+            <label for="filterFruitType" class="block font-bold">Fruit Type:</label>
+            <select 
+                id="filterFruitType" 
+                class="form-control w-full px-3 py-2 rounded" 
+                [(ngModel)]="filterFruitType" 
+                (ngModelChange)="onFilterChange()">
+                <option value="">All types</option>
+                <option *ngFor="let fruit of fruits" [value]="fruit">{{fruit}}</option>
+            </select>
+        </div>
+    </div>
+
+
+    <div *ngIf="!loading && totalPages() > 1" class="mt-6 flex justify-center">
+        <button 
+            (click)="changePage(currentPage - 1)" 
+            [disabled]="currentPage === 1" 
+            class="px-4 py-2 bg-gray-300 text-black rounded mr-2"
+        >
+            Previous
+        </button>
+        <span class="px-4 py-2">Page {{currentPage}} of {{totalPages()}}</span>
+        <button 
+            (click)="changePage(currentPage + 1)" 
+            [disabled]="currentPage === totalPages()" 
+            class="px-4 py-2 bg-gray-300 text-black rounded ml-2"
+        >
+            Next
+        </button>
+    </div>
+
+
+    <!-- List of fruits with pagination -->
+    <div *ngIf="!loading" class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div *ngFor="let fruit of filterFruit()" class="bg-white rounded-lg dark:bg-gray-800">
+            <div class="overflow-hidden border rounded-lg border-dark">
+              <img src="{{fruit.filename}}" alt="{{ fruit.name }}" class="w-full h-48 object-cover">
+              <div class="p-4">
+                <h2 class="font-bold">{{ fruit.name }}</h2>
+                <!-- Usar el método getColorByFruitType para aplicar un color basado en el tipo -->
+                <div class="badge mb-2 text-white px-2 py-1 rounded" [ngClass]="getColorByFruitType(fruit.type)">
+                  {{ fruit.type }}
+                </div>
+                <p class="text-sm mt-2">{{ fruit.description }}</p>
+                <p class="text-xs text-gray-500 mt-2">ID: {{ fruit.id }}</p>
+              </div>
+            </div>
+          </div>
+          
+    </div>
+
+    <!-- Loading spinner -->
+    <div *ngIf="loading" class="text-center">
+        <p>Loading fruits...</p>
+    </div>
+
+    <!-- Pagination -->
+    <div *ngIf="!loading && totalPages() > 1" class="mt-6 flex justify-center">
+        <button 
+            (click)="changePage(currentPage - 1)" 
+            [disabled]="currentPage === 1" 
+            class="px-4 py-2 bg-gray-300 text-black rounded mr-2"
+        >
+            Previous
+        </button>
+        <span class="px-4 py-2">Page {{currentPage}} of {{totalPages()}}</span>
+        <button 
+            (click)="changePage(currentPage + 1)" 
+            [disabled]="currentPage === totalPages()" 
+            class="px-4 py-2 bg-gray-300 text-black rounded ml-2"
+        >
+            Next
+        </button>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+<div *ngIf="loading">
+  <app-loading></app-loading>
+</div>
+
+<main class="flex-1" *ngIf="!loading">
+  <div class="container mx-auto py-6">
+    <!-- Filters -->
+    <!-- Aquí podrías incluir tus filtros si es necesario -->
+    <div class="flex flex-col">
+      <label for="filterName" class="mb-2 text-sm font-semibold text-gray-700">Name:</label>
+      <input type="text" class="form-control px-3 py-2 border rounded-lg" id="filterName" placeholder="Filter Crew" [(ngModel)]="filterName" (ngModelChange)="onFilterChange()">
+    </div>
+    <!-- Paginación (parte superior) -->
+
+    <div class="flex justify-center mt-6">
+      <button class="px-3 py-1 border rounded" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+        Previous
+      </button>
+      <span class="px-3 py-1">{{ currentPage }} / {{ totalPages() }}</span>
+      <button class="px-3 py-1 border rounded" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages()">
+        Next
+      </button>
+    </div>
+
+
+    <!-- Lista de Crews -->
+    <div class="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div *ngFor="let crew of filterCrews()" 
+           class="max-w-sm p-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <a [href]="'/crew/' + crew.id" class="block">
+          <h5 class="mb-2 text-2xl font-bold tracking-tight text-dark dark:text-white">{{ crew.name }}</h5>
+        </a>
+        <div class="text-dark">
+          <p><strong>ID:</strong> {{ crew.id }}</p>
+          <p *ngIf="crew.description"><strong>Description:</strong> {{ crew.description }}</p>
+          <p><strong>Status:</strong> {{ crew.status }} m</p>
+          <p><strong>Number:</strong> {{ parseFloat(crew.number) }}</p>
+          <p><strong>Roman_Name:</strong> {{ crew.roman_name }}</p>
+          <p><strong>Prime:</strong> {{ crew.total_prime }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paginación (parte inferior) -->
+    <div class="flex justify-center mt-6">
+      <button class="px-3 py-1 border rounded" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+        Previous
+      </button>
+      <span class="px-3 py-1">{{ currentPage }} / {{ totalPages() }}</span>
+      <button class="px-3 py-1 border rounded" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages()">
+        Next
+      </button>
+    </div>
+  </div>
+</main>

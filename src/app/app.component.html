@@ -1,0 +1,89 @@
+<div class="flex flex-col min-h-screen">
+  <!-- Header -->
+  <header class="p-2 sticky top-0 z-50 w-full bg-white border-b backdrop-blur-lg ">
+    <div class="container flex justify-between items-center h-16 mx-auto">
+      <!-- Navbar Brand -->
+      <a href="#" class="flex items-center space-x-2">
+        <img src="https://ih1.redbubble.net/image.4155785074.7045/bg,f8f8f8-flat,750x,075,f-pad,750x1000,f8f8f8.webp" alt="Flowbite Logo" class="h-10">
+      </a>
+
+      <!-- Navbar toggler for mobile -->
+      <button id="navbarToggler" class="block lg:hidden p-2 rounded-md text-gray-700 focus:outline-none" aria-label="Toggle navigation">
+        <i class="fas fa-bars w-6 h-6"></i> <!-- Font Awesome icon for hamburger menu -->
+      </button>
+
+      <!-- Navbar Links for large screens -->
+      <nav class="hidden lg:flex space-x-4">
+        <ul class="flex space-x-4 text-gray-700">
+          <li>
+            <a href="/home" class="nav-link text-sm font-medium hover:text-blue-500 flex items-center transition-all">
+              <i class="fas fa-home mr-1"></i>
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="/characters" class="nav-link text-sm font-medium hover:text-blue-500 flex items-center transition-all">
+              <i class="fas fa-user mr-1"></i>
+              Characters
+            </a>
+          </li>
+          <li>
+            <a href="/fruits" class="nav-link text-sm font-medium hover:text-blue-500 flex items-center transition-all">
+              <i class="fas fa-apple-alt mr-1"></i>
+              Fruits
+            </a>
+          </li>
+          <li>
+            <a href="/crews" class="nav-link text-sm font-medium hover:text-blue-500 flex items-center transition-all">
+              <i class="fas fa-users mr-1"></i>
+              Crews
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Collapsible Mobile Menu -->
+      <div id="mobileMenu" class="hidden lg:hidden absolute top-full left-0 right-0 bg-white shadow-md p-4 space-y-2 transition-all duration-300">
+        <ul class="flex flex-col space-y-2 text-gray-700">
+          <li>
+            <a href="/home" class="nav-link text-sm font-medium hover:text-blue-500 flex items-center transition-all">
+              <i class="fas fa-home mr-1"></i>
+              Home
+            </a>
+          </li>
+          <li>
+            <a href="/characters" class="nav-link text-sm font-medium hover:text-blue-500 flex items-center transition-all">
+              <i class="fas fa-user mr-1"></i>
+              Characters
+            </a>
+          </li>
+          <li>
+            <a href="/fruits" class="nav-link text-sm font-medium hover:text-blue-500 flex items-center transition-all">
+              <i class="fas fa-apple-alt mr-1"></i>
+              Fruits
+            </a>
+          </li>
+          <li>
+            <a href="/crews" class="nav-link text-sm font-medium hover:text-blue-500 flex items-center transition-all">
+              <i class="fas fa-users mr-1"></i>
+              Crews
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- Character Detail Component -->
+  <main class="flex-1 p-4">
+    <router-outlet></router-outlet>
+  </main>
+</div>
+
+<!-- JavaScript to handle mobile menu toggle -->
+<script>
+  document.getElementById('navbarToggler').addEventListener('click', function () {
+    const mobileMenu = document.getElementById('mobileMenu');
+    mobileMenu.classList.toggle('hidden');
+  });
+</script>

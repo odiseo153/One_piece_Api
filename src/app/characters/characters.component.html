@@ -1,0 +1,81 @@
+<div *ngIf="loading">
+
+    <app-loading></app-loading>
+</div>
+
+
+<main class="flex-1" *ngIf="!loading">
+    <div class="container mx-auto py-6">
+      <!-- Filters -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div class="flex flex-col">
+          <label for="filterName" class="mb-2 text-sm font-semibold text-gray-700">Name:</label>
+          <input type="text" class="form-control px-3 py-2 border rounded-lg" id="filterName" placeholder="Filter characters" [(ngModel)]="filterName" (ngModelChange)="onFilterChange()">
+        </div>
+        <div class="flex flex-col">
+          <label for="filterStatus" class="mb-2 text-sm font-semibold text-gray-700">Status:</label>
+          <select class="form-control px-3 py-2 border rounded-lg" id="filterStatus" [(ngModel)]="filterStatus" (ngModelChange)="onFilterChange()" title="Status">
+            <option value="">All statuses</option>
+            <option value="living">Alive</option>
+            <option value="deceased">Deceased</option>
+          </select>
+        </div>
+        <div class="flex flex-col">
+          <label for="filterJob" class="mb-2 text-sm font-semibold text-gray-700">Job:</label>
+          <select class="form-control px-3 py-2 border rounded-lg" id="filterJob" [(ngModel)]="filterJob" (ngModelChange)="onFilterChange()" title="Job">
+            <option value="">All jobs</option>
+            <option *ngFor="let job of jobs">{{ job }}</option>
+          </select>
+        </div>
+        <div class="flex flex-col">
+          <label for="filterFruitType" class="mb-2 text-sm font-semibold text-gray-700">Fruit Type:</label>
+          <select class="form-control px-3 py-2 border rounded-lg" id="filterFruitType" [(ngModel)]="filterFruitType" (ngModelChange)="onFilterChange()" title="Fruit Type">
+            <option value="">All fruits</option>
+            <option *ngFor="let fruit of fruits">{{ fruit }}</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="flex justify-center mt-6">
+        <button class="px-3 py-1 border rounded" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+          Previous
+        </button>
+        <span class="px-3 py-1">{{ currentPage }} / {{ totalPages() }}</span>
+        <button class="px-3 py-1 border rounded" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages()">
+          Next
+        </button>
+      </div>
+
+      <!-- Characters List -->
+      <div class="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div *ngFor="let character of filterCharacters()" 
+        class="max-w-sm p-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+          <a [href]="'/character/' + character.id" class="block">
+            <h5 class="mb-2 text-2xl font-bold tracking-tight text-dark dark:text-white">{{ character.name }}</h5>
+          </a>
+          <div class="text-dark">
+            <p><strong>ID:</strong> {{ character.id }}</p>
+            <p><strong>Size:</strong> {{ parseFloat(character.size)   }} m</p>
+
+            <p><strong>Age:</strong> {{ character.age }}</p>
+            <p><strong>Bounty:</strong> {{ character.bounty }}</p>
+            <p><strong>Fruit:</strong> {{ character.fruit?.name ?? "No has" }}</p>
+            <p><strong>Job:</strong> {{ character?.job ?? "No has" }}</p>
+            <span class="{{ character.status === 'living' ? 'bg-green-700' : 'bg-red-700' }} rounded-xl mt-3 p-1 text-white inline-block">{{ character.status }}</span>
+          
+        </div>
+        </div>
+      </div>
+  
+      <!-- Pagination -->
+      <div class="flex justify-center mt-6">
+        <button class="px-3 py-1 border rounded" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+          Previous
+        </button>
+        <span class="px-3 py-1">{{ currentPage }} / {{ totalPages() }}</span>
+        <button class="px-3 py-1 border rounded" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages()">
+          Next
+        </button>
+      </div>
+    </div>
+  </main>

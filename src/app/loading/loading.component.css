@@ -1,0 +1,24 @@
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Ocupa toda la altura de la ventana */
+    background-color: white; /* Fondo negro */
+  }
+  
+  .loading-logo {
+    width: 150px; /* Ajusta el tamaño del logo según tus necesidades */
+    height: 150px;
+    animation: spin 2s linear infinite;
+  }
+  
+  /* Animación para rotar el logo */
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  

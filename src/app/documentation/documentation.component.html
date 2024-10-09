@@ -1,0 +1,37 @@
+<div class="flex flex-col min-h-[100dvh]">
+
+    <!-- Hero Section -->
+    <section class="w-full py-12 md:py-24 lg:py-32 bg-[url('https://c4.wallpaperflare.com/wallpaper/114/1008/41/one-piece-monkey-d-luffy-hd-wallpaper-preview.jpg')] bg-cover bg-center">
+      <div class="container px-4 md:px-6 text-center">
+        <h1 class="text-3xl font-bold tracking-tighter sm:text-5xl md:text-6xl text-white drop-shadow-lg">
+          Documentation
+        </h1>
+      </div>
+    </section>
+  
+    <!-- Cards Section -->
+    <section class="w-full py-12 bg-gray-100">
+      <div class="container px-4 md:px-6">
+        <div  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+          <!-- Card 1 -->
+          <a [href]="data.url" *ngFor="let data of cards" class="flex flex-col items-center bg-white p-4 rounded-lg shadow-md">
+            <img [src]="data.image" alt="Feature 1" class="h-40 w-40 object-cover rounded-md mb-4">
+            <p class="text-center text-gray-800 font-medium">{{data.name}}</p>
+          </a>
+        
+        
+        </div>
+      </div>
+    </section>
+  
+    <!-- Footer -->
+    <footer class="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
+      <p class="text-xs text-gray-500">© 2024 One Piece API Documentation. All rights reserved.</p>
+      <nav class="sm:ml-auto flex gap-4 sm:gap-6">
+        <a class="text-xs hover:underline underline-offset-4" href="#">Terms of Service</a>
+        <a class="text-xs hover:underline underline-offset-4" href="#">Privacy</a>
+      </nav>
+    </footer>
+  </div>
+  

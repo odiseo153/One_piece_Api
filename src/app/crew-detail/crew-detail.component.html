@@ -1,0 +1,86 @@
+<div class="container my-5" *ngIf="crew">
+    <!-- Crew Information -->
+    <h1>Crew's Detail</h1>
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h2 class="card-title text-center">{{ crew.name }}</h2>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><strong>ID:</strong> {{ crew.id }}</li>
+              <li class="list-group-item"><strong>Description:</strong> {{ crew.description || 'No description available' }}</li>
+              <li class="list-group-item"><strong>Status:</strong> {{ crew.status }}</li>
+              <li class="list-group-item"><strong>Number:</strong> {{ crew.number }}</li>
+              <li class="list-group-item"><strong>Roman Name:</strong> {{ crew.roman_name }}</li>
+              <li class="list-group-item"><strong>Total Prime:</strong> {{ crew.total_prime }}</li>
+              <li class="list-group-item"><strong>Is Yonko?</strong> {{ crew.is_yonko ? 'Yes' : 'No' }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <h1>Crew's Members</h1>
+    <!-- Character filter by name -->
+    <div class="row mb-4" >
+      <div class="col-md-6">
+        <label for="filterName" class="form-label">Search members by name:</label>
+        <input type="text" class="form-control" id="filterName" [(ngModel)]="filterName" (ngModelChange)="onFilterChange()" placeholder="Enter a name...">
+      </div>
+    </div>
+  
+    <!-- Crew members list -->
+    <div class="row" >
+      <div *ngIf="filterCharacter().length > 0; else noCharacters" class="col-md-12">
+        <div class="row">
+          <div *ngFor="let character of filterCharacter()" class="col-md-4 mb-4">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <a [href]="'/character/' + character.id" class="text-dark text-decoration-none">
+                    {{ character.name }}
+                  </a>
+                </h5>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item"><strong>ID:</strong> {{ character.id }}</li>
+                  <li class="list-group-item"><strong>Height:</strong> {{ parseFloat(character.size) }} m</li>
+                  <li class="list-group-item"><strong>Age:</strong> {{ character.age }}</li>
+                  <li class="list-group-item"><strong>Bounty:</strong> {{ character.bounty }}</li>
+                  <li class="list-group-item"><strong>Fruit:</strong> {{ character.fruit?.name ?? 'None' }}</li>
+                  <li class="list-group-item"><strong>Job:</strong> {{ character?.job ?? 'Unassigned' }}</li>
+                  <li class="list-group-item">
+                    <span class="badge {{ character.status === 'living' ? 'bg-success' : 'bg-danger' }}">
+                      {{ character.status === 'living' ? 'Alive' : 'Deceased' }}
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- No characters message -->
+      <ng-template #noCharacters  >
+        <p class="text-center">No characters found for this crew.</p>
+      </ng-template>
+    </div>
+  
+    <!-- Pagination -->
+    <div class="row mt-4" *ngIf="totalItems > itemsPerPage">
+      <div class="col-md-12 d-flex justify-content-between">
+        <button class="btn btn-primary" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+        <span>Page {{ currentPage }} of {{ totalPages() }}</span>
+        <button class="btn btn-primary" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages()">Next</button>
+      </div>
+    </div>
+  
+    <!-- Loading spinner -->
+    <div class="row mt-4" !#noCharacters *ngIf="loading">
+      <div class="col-md-12 text-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </div>
+</div>
